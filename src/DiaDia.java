@@ -1,5 +1,3 @@
- 
-
 import java.util.Scanner;
 
 /**
@@ -53,16 +51,25 @@ public class DiaDia {
 	 */
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire = new Comando(istruzione);
-
+		
+		if (comandoDaEseguire.getNome() == null) { 
+	        System.out.println("Nessun comando inserito.");
+	        return false;
+		}
+		
 		if (comandoDaEseguire.getNome().equals("fine")) {
 			this.fine(); 
 			return true;
+			
 		} else if (comandoDaEseguire.getNome().equals("vai"))
 			this.vai(comandoDaEseguire.getParametro());
+		
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
+		
 		else
 			System.out.println("Comando sconosciuto");
+		
 		if (this.partita.vinta()) {
 			System.out.println("Hai vinto!");
 			return true;
@@ -86,18 +93,28 @@ public class DiaDia {
 	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
 	 */
 	private void vai(String direzione) {
-		if(direzione==null)
-			System.out.println("Dove vuoi andare ?");
+		if(direzione==null) {	
+			System.out.println("Devi scegliere per forza la direzione: ");
+			String istruzione; 
+			Scanner scannerDiLinee;
+			scannerDiLinee = new Scanner(System.in);		
+			do		
+				istruzione = scannerDiLinee.nextLine();
+			while (!processaIstruzione(istruzione));	
+		}
+		
 		Stanza prossimaStanza = null;
 		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
+		
 		if (prossimaStanza == null)
 			System.out.println("Direzione inesistente");
+		
 		else {
 			this.partita.setStanzaCorrente(prossimaStanza);
 			int cfu = this.partita.getCfu();
-			this.partita.setCfu(cfu--);
+			this.partita.setCfu(cfu--); //DA CAMBIARE!!!!!!!
 		}
-		System.out.println(partita.getStanzaCorrente().getDescrizione());
+		System.out.println(partita.getStanzaCorrente().getDescrizione()); //descrizione? problema in attrezzo ultime righe
 	}
 
 	/**
@@ -112,3 +129,7 @@ public class DiaDia {
 		gioco.gioca();
 	}
 }
+
+
+//ore passate: .5
+//ho modificato nella classe stanza il metodo tostring alla riga 118
