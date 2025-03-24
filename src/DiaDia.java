@@ -100,7 +100,7 @@ public class DiaDia {
 			scannerDiLinee = new Scanner(System.in);		
 			do		
 				istruzione = scannerDiLinee.nextLine();
-			while (!processaIstruzione(istruzione));	
+			while (!processaIstruzione(istruzione));
 		}
 		
 		Stanza prossimaStanza = null;
