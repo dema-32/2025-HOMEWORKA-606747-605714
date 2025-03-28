@@ -5,6 +5,8 @@ public class Borsa {
 		private Attrezzo[] attrezzi;
 		private int numeroAttrezzi;
 		private int pesoMax;
+		private Partita partita;
+		private Attrezzo attrezzo;
 	
 	public Borsa() {
 		this(DEFAULT_PESO_MAX_BORSA);
@@ -25,6 +27,7 @@ public class Borsa {
 		
 	this.attrezzi[this.numeroAttrezzi] = attrezzo;
 	this.numeroAttrezzi++;
+	System.out.println("Aggiunto in borsa");
 	return true;
 	}
 	
@@ -58,9 +61,20 @@ public class Borsa {
 	}
 	
 	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
-		Attrezzo a = null;
-		// ---> TODO (implementare questo metodo) <---
-		return a;
+		Attrezzo a = this.getAttrezzo(nomeAttrezzo);
+		
+		if (a == null) {
+			System.out.println("Nello zaino non c'è questo attrezzo.");
+			return a;
+		}
+		
+		else {
+			//leva a zaino
+			a = null;
+			this.numeroAttrezzi -= 1;
+			System.out.println("rimosso dalla borsa");
+			return a;
+		}
 	}
 	
 	public String toString() {

@@ -24,12 +24,16 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
+	private Labirinto labirinto;
+	private Giocatore giocatore;
+	
 
 	public DiaDia() {
 		this.partita = new Partita();
+		this.labirinto = new Labirinto();
 	}
 
 	public void gioca() {
@@ -52,6 +56,12 @@ public class DiaDia {
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire = new Comando(istruzione);
 		
+		if (partita.isFinita()) {
+			System.out.println("Hai finito i cfu, sarà per la prossima.");
+			this.fine(); 
+			return true;
+		}
+		
 		if (comandoDaEseguire.getNome() == null) { 
 	        System.out.println("Nessun comando inserito.");
 	        return false;
@@ -67,8 +77,16 @@ public class DiaDia {
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
 		
-		else
+		else if (comandoDaEseguire.getNome().equals("prendi"))
+			this.prendi(comandoDaEseguire.getParametro());
+		
+		//else if (comandoDaEseguire.getNome().equals("posa"))
+		//	this.posa(comandoDaEseguire.getParametro());
+		
+		else {
 			System.out.println("Comando sconosciuto");
+			return false;
+		}
 		
 		if (this.partita.vinta()) {
 			System.out.println("Hai vinto!");
@@ -93,28 +111,24 @@ public class DiaDia {
 	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
 	 */
 	private void vai(String direzione) {
-		if(direzione==null) {	
-			System.out.println("Devi scegliere per forza la direzione: ");
-			String istruzione; 
-			Scanner scannerDiLinee;
-			scannerDiLinee = new Scanner(System.in);		
-			do		
-				istruzione = scannerDiLinee.nextLine();
-			while (!processaIstruzione(istruzione));
+		
+		if (direzione == null) {
+		    System.out.println("Devi scegliere una direzione!");
+		    return;
 		}
 		
+		Labirinto labirinto = partita.getLabirinto();
 		Stanza prossimaStanza = null;
-		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
+		prossimaStanza = partita.getLabirinto().getStanzaCorrente().getStanzaAdiacente(direzione);
 		
 		if (prossimaStanza == null)
 			System.out.println("Direzione inesistente");
 		
 		else {
-			this.partita.setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getCfu();
-			this.partita.setCfu(cfu--); //DA CAMBIARE!!!!!!!
+			labirinto.setStanzaCorrente(prossimaStanza);
+			partita.getGiocatore().menoCfu(); //DA CAMBIARE!!!!!!!
 		}
-		System.out.println(partita.getStanzaCorrente().getDescrizione()); //descrizione? problema in attrezzo ultime righe
+		System.out.println(labirinto.getStanzaCorrente().getDescrizione()); //descrizione? problema in attrezzo ultime righe
 	}
 
 	/**
@@ -123,6 +137,40 @@ public class DiaDia {
 	private void fine() {
 		System.out.println("Grazie di aver giocato!");  // si desidera smettere
 	}
+	
+	
+	private void prendi(String oggetto) {
+		
+		if (oggetto == null) {
+		    System.out.println("Devi dirmi che oggetto vuoi prendere!");
+		    return;
+		}
+		
+		Attrezzo attrezzodaprendere = partita.getLabirinto().getStanzaCorrente().getAttrezzo(oggetto);
+		partita.getLabirinto().getStanzaCorrente().removeAttrezzo(oggetto);
+		partita.getGiocatore().getZaino().addAttrezzo(attrezzodaprendere);
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static void main(String[] argc) {
 		DiaDia gioco = new DiaDia();
@@ -131,5 +179,5 @@ public class DiaDia {
 }
 
 
-//ore passate: .5
+//ore passate: 3.5 + 1.5 + 3 + 
 //ho modificato nella classe stanza il metodo tostring alla riga 118

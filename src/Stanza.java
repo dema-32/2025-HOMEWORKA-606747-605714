@@ -23,6 +23,7 @@ public class Stanza {
     private int numeroStanzeAdiacenti;
     
 	private String[] direzioni;
+	private Partita partita;
     
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -103,6 +104,7 @@ public class Stanza {
         if (this.numeroAttrezzi < NUMERO_MASSIMO_ATTREZZI) {
         	this.attrezzi[numeroAttrezzi] = attrezzo;
         	this.numeroAttrezzi++;
+        	System.out.println("Aggiunto nella stanza");
         	return true;
         }
         else {
@@ -116,22 +118,29 @@ public class Stanza {
 	* @return la rappresentazione stringa
 	*/
     public String toString() {
+    	
+    	//descrizione direzioni
     	StringBuilder risultato = new StringBuilder();
     	risultato.append(this.nome);
     	risultato.append("\nUscite: ");
     	for (String direzione : this.direzioni)
     		if (direzione!=null)
     			risultato.append(" " + direzione);
+    	
+    	//descrizione attrezzi
+    	boolean haAttrezzi = false;
     	risultato.append("\nAttrezzi nella stanza: ");
     	for (Attrezzo attrezzo : this.attrezzi) {
-    		if(attrezzo == null) {
-    			System.out.println("nessun attrezzo");
-    			break;
-    		}
-    		else {
-    		risultato.append(attrezzo.toString()+" ");
-    		}
-    	}
+    		if (attrezzo != null) {
+                risultato.append(attrezzo.toString() + " ");
+                haAttrezzi = true; // Se c'è almeno un attrezzo, setta il flag a true
+            }
+        }
+        
+        // Se non ci sono attrezzi, aggiungi una nota
+        if (!haAttrezzi) {
+            risultato.append("nessun attrezzo");
+        }
     	return risultato.toString();
     }
 
@@ -159,7 +168,7 @@ public class Stanza {
 		Attrezzo attrezzoCercato;
 		attrezzoCercato = null;
 		for (Attrezzo attrezzo : this.attrezzi) {
-			if (attrezzo.getNome().equals(nomeAttrezzo))
+			if (attrezzo!= null && attrezzo.getNome().equals(nomeAttrezzo))
 				attrezzoCercato = attrezzo;
 		}
 		return attrezzoCercato;	
@@ -170,9 +179,22 @@ public class Stanza {
 	 * @param nomeAttrezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	public boolean removeAttrezzo(Attrezzo attrezzo) {
-		// TODO da implementare
-		return false;
+	public boolean removeAttrezzo(String attrezzo) {
+		for (int i = 0; i < numeroAttrezzi; i++) {
+	        if (attrezzi[i] != null && attrezzi[i].getNome().equals(attrezzo)) {
+	            // Sposta gli elementi successivi di una posizione a sinistra
+	            for (int j = i; j < numeroAttrezzi - 1; j++) {
+	                attrezzi[j] = attrezzi[j + 1];
+	            }
+	            // Imposta l'ultimo slot a null
+	            attrezzi[numeroAttrezzi - 1] = null;
+	            numeroAttrezzi--;
+	            System.out.println("Rimosso dalla stanza");
+	            return true;
+	        }
+	    }
+	    System.out.println("Nella stanza non c'è questo attrezzo.");
+	    return false;
 	}
 
 
