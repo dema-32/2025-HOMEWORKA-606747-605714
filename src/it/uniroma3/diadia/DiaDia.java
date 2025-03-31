@@ -39,7 +39,7 @@ public class DiaDia {
 	public DiaDia() {
 		this.partita = new Partita();
 		this.labirinto = new Labirinto();
-	}
+	}57
 
 	public void gioca() {
 		String istruzione; 
