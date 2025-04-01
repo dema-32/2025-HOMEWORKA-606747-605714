@@ -71,7 +71,7 @@ public class Giocatore {
 
 	} 
 	
-	public void prendi(String oggettoDaPrendere) {
+	public boolean prendi(String oggettoDaPrendere) {
 		if(oggettoDaPrendere == null) {
 			io.mostraMessaggio("quale oggetto vuoi prendere?");
 			oggettoDaPrendere = io.leggiRiga();
@@ -83,16 +83,37 @@ public class Giocatore {
 				borsa.addAttrezzo(oggetto);
 				stanzaCorrente.removeAttrezzo(stanzaCorrente.getAttrezzo(oggettoDaPrendere));
 				io.mostraMessaggio("hai aggiunto" + oggettoDaPrendere + "nella tua borsa");
+				return true;
 			}
 		}
 		else {
 			io.mostraMessaggio("borsa piena");
 		}
+		return false;
 	}
 	
-	public void posa() {
-		
+	public boolean posa(String attrezzoDaPosare) {
+		if(attrezzoDaPosare == null) {
+			io.mostraMessaggio("Quale attrezzo vuoi posare?");
+			attrezzoDaPosare = io.leggiRiga();
+		}
+		Stanza stanzaCorrente = labirinto.getStanzaCorrente();
+		if(!borsa.isEmpty()) {
+			if(borsa.hasAttrezzo(attrezzoDaPosare)) {
+				if(stanzaCorrente.getNumeroAttrezzi() < 10) {
+					Attrezzo att = borsa.removeAttrezzo(borsa.getAttrezzo(attrezzoDaPosare));
+					if(att != null) {
+						stanzaCorrente.addAttrezzo(att);
+						io.mostraMessaggio("Hai posato "+ attrezzoDaPosare +" in "+ stanzaCorrente.getNome());
+						return true;
+					}
+				}else io.mostraMessaggio("La stanza è piena");
+			}else io.mostraMessaggio(attrezzoDaPosare + " non presente nella borsa");
+		}else io.mostraMessaggio("La borsa è vuota");
+		return false;
 	}
+
+
 
 	public int getCfu() {
 		return this.cfu;

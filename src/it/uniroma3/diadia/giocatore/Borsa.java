@@ -78,5 +78,10 @@ public class Borsa {
 	public boolean Full() {
 		return this.numeroAttrezzi == 10;
 	}
+	
+	public boolean isEmpty() {
+		return this.numeroAttrezzi == 0;
+	}
+
 
 }
