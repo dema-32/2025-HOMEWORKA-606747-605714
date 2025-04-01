@@ -1,16 +1,43 @@
 package it.uniroma3.diadia.ambienti;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+/**
+ * Classe che crea il labirinto iniziale della partita,
+ * aggiungendo in ogni stanza i relativi attrezzi.
+ * Setta lo spawn del giocatore e la stanza vincente.
+ *
+ *
+ * @author  Alfredo e Nazar
+ * @see partita        
+ * @version 0.0.2.a
+ */
 
 public class Labirinto {
+	Stanza stanzaIniziale;
+	Stanza stanzaVincente;
+	Stanza stanzaCorrente;
 	
-	private Stanza stanzaCorrente;
-	private Stanza stanzaVincente;
+	public Labirinto() {
+		creaStanze();
+	}
 	
-	/**
-     * Crea tutte le stanze e le porte di collegamento
-     */
+	public Stanza getStanzaCorrente() {
+		return stanzaCorrente;
+	}
+
+	public void setStanzaCorrente(Stanza stanzaCorrente) {
+		this.stanzaCorrente = stanzaCorrente;
+	}
+
 	
-    public void creaStanze() {
+	public Stanza getStanzaFinale() {
+		return this.stanzaVincente;
+	}
+	
+	public void setStanzaVincenete(Stanza stanzaVincente) {
+		this.stanzaVincente = stanzaVincente;
+	}
+	
+	private void creaStanze() {
 
 		/* crea gli attrezzi */
     	Attrezzo lanterna = new Attrezzo("lanterna",3);
@@ -42,20 +69,8 @@ public class Labirinto {
 		atrio.addAttrezzo(osso);
 
 		// il gioco comincia nell'atrio
-        stanzaCorrente = atrio;  
-		stanzaVincente = biblioteca;
+		this.stanzaIniziale = atrio;
+        this.stanzaCorrente = this.stanzaIniziale;
+		this.stanzaVincente = biblioteca;
     }
-
-	public Stanza getStanzaVincente() {
-		return stanzaVincente;
-	}
-
-	public void setStanzaCorrente(Stanza stanzaCorrente) {
-		this.stanzaCorrente = stanzaCorrente;
-	}
-
-	public Stanza getStanzaCorrente() {
-		return this.stanzaCorrente;
-	}
-
 }

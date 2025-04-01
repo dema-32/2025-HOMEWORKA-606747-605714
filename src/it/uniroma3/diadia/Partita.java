@@ -1,7 +1,6 @@
 package it.uniroma3.diadia;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.giocatore.Borsa;
 import it.uniroma3.diadia.giocatore.Giocatore;
 
 /**
@@ -14,57 +13,41 @@ import it.uniroma3.diadia.giocatore.Giocatore;
 
 public class Partita {
 
-	
-	private boolean finita;
-	private Labirinto labirinto;
 	private Giocatore giocatore;
+	private Labirinto labirinto;
+	private boolean finita;
 	
-	public Giocatore getGiocatore() {
-		return giocatore;
-	}
+	//private IOConsole io;
 
-	public void setGiocatore(Giocatore giocatore) {
-		this.giocatore = giocatore;
-	}
-
-	public Labirinto getLabirinto() {
-		return labirinto;
-	}
-
-	public void setLabirinto(Labirinto labirinto) {
-		this.labirinto = labirinto;
-	}
-
-	public Partita(){
-		this.giocatore = new Giocatore();
-		this.labirinto = new Labirinto(); // Inizializzo il labirinto
-	    labirinto.creaStanze(); // Ora posso creare le stanze
-	    this.finita = false;
-	    giocatore.setCfu(Giocatore.getCfuIniziali());
-	    this.giocatore.setZaino(new Borsa());
-	}
-	
-	/**
-	 * Restituisce vero se e solo se la partita e' stata vinta
-	 * @return vero se partita vinta
-	 */
-	public boolean vinta() {
-		return labirinto.getStanzaCorrente()== labirinto.getStanzaVincente();
+	public Partita(IOConsole io){
+		this.labirinto = new Labirinto();
+		this.giocatore = new Giocatore(labirinto, io);
+		this.finita = false;
 	}
 
 	/**
 	 * Restituisce vero se e solo se la partita e' finita
 	 * @return vero se partita finita
 	 */
-	public boolean isFinita() {
-		return finita || vinta() || (giocatore.getCfu() == 0);
+	
+	public Labirinto getLabirinto() {
+		return this.labirinto;
 	}
 
-	/**
-	 * Imposta la partita come finita
-	 *
-	 */
+	public Giocatore getGiocatore() {
+		return this.giocatore;
+	}
+	
+	public boolean isFinita() {
+		return finita || isVinta() || (giocatore.getCfu() == 0);
+	}
+
 	public void setFinita() {
 		this.finita = true;
+	} 
+
+	public boolean isVinta() {
+		return this.labirinto.getStanzaCorrente() == this.labirinto.getStanzaFinale();
 	}
+
 }
