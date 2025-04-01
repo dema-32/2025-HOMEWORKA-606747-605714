@@ -7,10 +7,7 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
  * Classe Borsa - un giocatore ha a disposizione
  * una borsa con la quale può raccogliere attrezzi
  * sparsi lungo il labirinto
- * 
- * @author Alfredo e Nazar
- * @see Giocatore, Attrezzi
- * @version 0.0.2.a
+ *
  */
 
 public class Borsa {
@@ -58,12 +55,7 @@ public class Borsa {
 		}
 		return peso;
 	}
-	public boolean isEmpty() {
-		return this.numeroAttrezzi == 0;
-	}
-	public boolean isFull() {
-		return this.numeroAttrezzi == 10;
-	}
+	
 	public boolean hasAttrezzo(String nomeAttrezzo) {
 		return this.getAttrezzo(nomeAttrezzo)!=null;
 	}
@@ -82,21 +74,9 @@ public class Borsa {
 
 		return attrezzo; 
 	}
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-
-		if (!this.isEmpty()) {
-			s.append("Contenuto borsa ("+this.getPeso()+"kg/"+this.getPesoMax()+"kg): ");
-			for (int i= 0; i<this.attrezzi.length; i++) {
-				if(attrezzi[i] != null)
-					s.append(attrezzi[i].toString()+" ");
-			}
-				
-				
-		}
-		else
-			s.append("Borsa vuota");
-		return s.toString();
+	
+	public boolean Full() {
+		return this.numeroAttrezzi == 10;
 	}
 
 }

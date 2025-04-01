@@ -1,6 +1,24 @@
 package it.uniroma3.diadia.giocatore;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
@@ -9,9 +27,6 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 /**
  * Classe Giocatore 
- * 
- * @author Alfredo e Nazar
- * @version 0.0.2.a
  */
 
 public class Giocatore {
@@ -55,6 +70,29 @@ public class Giocatore {
 		}
 
 	} 
+	
+	public void prendi(String oggettoDaPrendere) {
+		if(oggettoDaPrendere == null) {
+			io.mostraMessaggio("quale oggetto vuoi prendere?");
+			oggettoDaPrendere = io.leggiRiga();
+		}
+		if(!borsa.Full()) {
+			Stanza stanzaCorrente = labirinto.getStanzaCorrente();
+			if(stanzaCorrente.hasAttrezzo(oggettoDaPrendere)) {
+				Attrezzo oggetto = stanzaCorrente.getAttrezzo(oggettoDaPrendere);
+				borsa.addAttrezzo(oggetto);
+				stanzaCorrente.removeAttrezzo(stanzaCorrente.getAttrezzo(oggettoDaPrendere));
+				io.mostraMessaggio("hai aggiunto" + oggettoDaPrendere + "nella tua borsa");
+			}
+		}
+		else {
+			io.mostraMessaggio("borsa piena");
+		}
+	}
+	
+	public void posa() {
+		
+	}
 
 	public int getCfu() {
 		return this.cfu;
