@@ -64,7 +64,7 @@ public class Giocatore {
 			cfu = cfu - 1;
 			this.setCfu(cfu);
 			//se cambi stanza ma non sei in quella vincente stampa una desc.
-			if(this.labirinto.getStanzaCorrente()!=this.labirinto.getStanzaFinale()) {
+			if(this.labirinto.getStanzaCorrente()!=this.labirinto.getStanzaVincente()) {
 				io.mostraMessaggio(labirinto.getStanzaCorrente().getDescrizione());
 			}
 		}

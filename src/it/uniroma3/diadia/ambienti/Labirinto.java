@@ -4,11 +4,6 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
  * Classe che crea il labirinto iniziale della partita,
  * aggiungendo in ogni stanza i relativi attrezzi.
  * Setta lo spawn del giocatore e la stanza vincente.
- *
- *
- * @author  Alfredo e Nazar
- * @see partita        
- * @version 0.0.2.a
  */
 
 public class Labirinto {
@@ -29,7 +24,7 @@ public class Labirinto {
 	}
 
 	
-	public Stanza getStanzaFinale() {
+	public Stanza getStanzaVincente() {
 		return this.stanzaVincente;
 	}
 	
@@ -73,4 +68,5 @@ public class Labirinto {
         this.stanzaCorrente = this.stanzaIniziale;
 		this.stanzaVincente = biblioteca;
     }
+
 }

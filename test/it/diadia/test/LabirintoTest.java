@@ -1,14 +1,21 @@
 package it.diadia.test;
-import it.uniroma3.diadia.ambienti.*;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 
-class LabirintoTest {
+import static org.junit.Assert.*;
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+import org.junit.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+
+public class LabirintoTest {
+    private final Labirinto l = new Labirinto();
+    private final Stanza sv = new Stanza("Biblioteca");
+    
+    
+    @Test
+    public void testGetStanzaVincente() {
+        // Verifica che il nome della stanza vincente sia "Biblioteca"
+        assertEquals(sv.getNome(), l.getStanzaVincente().getNome());
+    }
+    
 }
