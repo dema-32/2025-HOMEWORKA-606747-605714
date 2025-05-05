@@ -1,5 +1,5 @@
 package it.uniroma3.diadia;
-
+import it.uniroma3.diadia.comandi.*;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -29,7 +29,7 @@ public class DiaDia {
 
 	private Partita partita;
 	private IOConsole io;
-
+	private FabbricaDiComandi FabbricaDiComandiFisarmonica;
 
 	public DiaDia(IOConsole io) {
 		this.partita = new Partita(io);
@@ -42,16 +42,31 @@ public class DiaDia {
 
 		do		
 			istruzione = io.leggiRiga();
-		while (!processaIstruzione(istruzione));
+		while ((!processaIstruzione(istruzione)));
 	}   
 
+	
+	private boolean processaIstruzione(String istruzione) {
+		Comando comandoDaEseguire;
+		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
+				comandoDaEseguire = factory.costruisciComando(istruzione);
+		comandoDaEseguire.esegui(this.partita);
+		if (this.partita.isVinta())
+
+			System.out.println("Hai vinto!");
+		//if (!this.partita.giocatoreIsVivo())
+
+			//System.out.println("Hai esaurito i CFU...");
+
+		return this.partita.isFinita();
+	}
 
 	/**
 	 * Processa una istruzione 
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
 	 */
-	private boolean processaIstruzione(String istruzione) {
+/*	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire = new Comando(istruzione);
 		if(comandoDaEseguire.getNome() == null) return false;
 
@@ -90,19 +105,18 @@ public class DiaDia {
 		}
 		
 		return false;
-	}   
+	}   */
 
 	// implementazioni dei comandi dell'utente:
 
-	private void aiuto() {
+/*	private void aiuto() {
 		for(int i=0; i< elencoComandi.length; i++) 
 			io.mostraMessaggio(""+elencoComandi[i]);
 		io.mostraMessaggio("");
 	}
-
 	private void fine() {
 		io.mostraMessaggio("Grazie di aver giocato!");
-	}
+	}*/
 
 	public static void main(String[] argc) {
 		IOConsole io = new IOConsole();

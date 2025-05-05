@@ -75,7 +75,7 @@ public class Borsa {
 		return attrezzo; 
 	}
 	
-	public boolean Full() {
+	public boolean isFull() {
 		return this.numeroAttrezzi == 10;
 	}
 	
