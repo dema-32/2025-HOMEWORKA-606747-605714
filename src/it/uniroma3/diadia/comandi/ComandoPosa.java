@@ -1,6 +1,7 @@
 // File: ComandoPosa.java
 package it.uniroma3.diadia.comandi;
 import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
@@ -17,7 +18,7 @@ public class ComandoPosa implements Comando {
     }
     @Override
     public void esegui(Partita partita) {
-        IOConsole io = new IOConsole();
+        IO io = new IOConsole();
         Giocatore giocatore = partita.getGiocatore();
         String attrezzoDaPosare = this.parametro;
 

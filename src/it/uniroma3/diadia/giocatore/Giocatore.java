@@ -2,7 +2,7 @@ package it.uniroma3.diadia.giocatore;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
@@ -35,13 +35,13 @@ public class Giocatore {
 
 	private Labirinto labirinto;
 	private Borsa borsa;
-	private IOConsole io;
+	private IO io;
 
-	public Giocatore(Labirinto labirinto, IOConsole io) { 
+	public Giocatore(Labirinto labirinto, IO io2) { 
 		this.cfu = CFU_INIZIALI;
 		this.borsa = new Borsa();
 		this.labirinto = labirinto;
-		this.io = io;
+		this.io = (IOConsole) io2;
 	}
 
 

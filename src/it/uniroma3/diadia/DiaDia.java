@@ -28,10 +28,10 @@ public class DiaDia {
 	static final private String[] elencoComandi = {"vai", "prendi", "posa","borsa", "fine","aiuto"};
 
 	private Partita partita;
-	private IOConsole io;
+	private IO io;
 	private FabbricaDiComandi FabbricaDiComandiFisarmonica;
 
-	public DiaDia(IOConsole io) {
+	public DiaDia(IO io) {
 		this.partita = new Partita(io);
 		this.io = io;
 	}
@@ -49,77 +49,17 @@ public class DiaDia {
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
 		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
-				comandoDaEseguire = factory.costruisciComando(istruzione);
+		comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
+		
 		if (this.partita.isVinta())
-
 			System.out.println("Hai vinto!");
-		//if (!this.partita.giocatoreIsVivo())
-
-			//System.out.println("Hai esaurito i CFU...");
-
+		
 		return this.partita.isFinita();
 	}
 
-	/**
-	 * Processa una istruzione 
-	 *
-	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
-	 */
-/*	private boolean processaIstruzione(String istruzione) {
-		Comando comandoDaEseguire = new Comando(istruzione);
-		if(comandoDaEseguire.getNome() == null) return false;
-
-		if (comandoDaEseguire.getNome().equals("fine")) {
-			this.fine(); 
-			return true;
-		} 
-		
-		else if (comandoDaEseguire.getNome().equals("vai"))
-			this.partita.getGiocatore().vai(comandoDaEseguire.getParametro());
-		
-		else if (comandoDaEseguire.getNome().equals("aiuto"))
-			this.aiuto();
-		
-		else if (comandoDaEseguire.getNome().equals("posa"))
-			this.partita.getGiocatore().posa(comandoDaEseguire.getParametro());
-		
-		else if (comandoDaEseguire.getNome().equals("prendi"))
-			this.partita.getGiocatore().prendi(comandoDaEseguire.getParametro());
-		
-		else if (comandoDaEseguire.getNome().equals("borsa"))
-			io.mostraMessaggio(partita.getGiocatore().getBorsa().toString());
-		
-		else
-			io.mostraMessaggio("Comando sconosciuto");
-
-		if (this.partita.isFinita()) {
-			
-			if (this.partita.isVinta() && this.partita.getGiocatore().getCfu()>0) {
-				io.mostraMessaggio("hai vinto con "+this.partita.getGiocatore().getCfu()+" cfu");
-			}
-			
-			else
-				io.mostraMessaggio("cfu finiti, hai perso!");
-			return true;
-		}
-		
-		return false;
-	}   */
-
-	// implementazioni dei comandi dell'utente:
-
-/*	private void aiuto() {
-		for(int i=0; i< elencoComandi.length; i++) 
-			io.mostraMessaggio(""+elencoComandi[i]);
-		io.mostraMessaggio("");
-	}
-	private void fine() {
-		io.mostraMessaggio("Grazie di aver giocato!");
-	}*/
-
 	public static void main(String[] argc) {
-		IOConsole io = new IOConsole();
+		IO io = new IOConsole();
 		DiaDia gioco = new DiaDia(io);
 		gioco.gioca();
 	}

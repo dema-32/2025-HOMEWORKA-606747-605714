@@ -1,5 +1,6 @@
 package it.uniroma3.diadia.comandi;
 import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
@@ -10,7 +11,7 @@ import it.uniroma3.diadia.giocatore.Giocatore;
  */
 public class ComandoPrendi implements Comando {
     private String parametro;
-    private IOConsole io;
+    private IO io;
 
     public void setParametro(String parametro) {
         this.parametro = parametro;
