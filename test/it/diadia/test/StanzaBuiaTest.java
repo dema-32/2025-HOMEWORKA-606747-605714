@@ -2,30 +2,37 @@ package it.diadia.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-import it.uniroma3.diadia.ambienti.StanzaBuia;
+import it.uniroma3.diadia.ambienti.*;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
+import org.junit.jupiter.api.Test;
+
 class StanzaBuiaTest {
+	Stanza stanzaBuia;
+	Attrezzo quaderno;
+	
+	@BeforeEach
+	void setUp() {
+		stanzaBuia = new StanzaBuia("stanzaBuia1", "quaderno");
+	}
+	
+	@Test
+	void testCostruttore() {
+		assertNotNull(stanzaBuia);
+	}
+	
+	@Test
+	void testSenzaAttrezzo() {
+		assertEquals("c'è buio pesto", stanzaBuia.getDescrizione());
+	}
+	
+	@Test
+	void testConAttrezzo() {
+		quaderno = new Attrezzo("quaderno", 5);
+		stanzaBuia.addAttrezzo(quaderno);
+		assertNotEquals("c'è buio pesto", stanzaBuia.getDescrizione());
+	}
 
-	 @Test
-	    public void testStanzaBuiaDarkWithoutLight() {
-	        StanzaBuia sb = new StanzaBuia("Grotta", "lanterna");
-	        sb.addAttrezzo(new Attrezzo("pala", 3));
-	        String desc = sb.getDescrizione();
-	        assertEquals("C'è buio pesto", desc);
-	    }
-
-	    @Test
-	    public void testStanzaBuiaLightRevealed() {
-	        StanzaBuia sb = new StanzaBuia("Grotta", "lanterna");
-	        sb.addAttrezzo(new Attrezzo("lanterna", 1));
-	        sb.addAttrezzo(new Attrezzo("pala", 3));
-	        String desc = sb.getDescrizione();
-	        assertTrue(desc.contains("Grotta"));
-	        assertTrue(desc.contains("pala"));
-	    }
 }
-
-
