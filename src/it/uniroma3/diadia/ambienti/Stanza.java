@@ -1,5 +1,5 @@
 package it.uniroma3.diadia.ambienti;
-
+import java.util.*;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 /**
@@ -17,13 +17,9 @@ public class Stanza {
 
 	private String nome;
 
-	private Attrezzo[] attrezzi;
-	private int numeroAttrezzi;
-
-	private Stanza[] stanzeAdiacenti;
-	private int numeroStanzeAdiacenti;
-
-	private String[] direzioni;
+	private List<Attrezzo> attrezzi;
+	private Map<Direzione,stanza> direzionestanzaAdiacente;
+	private Map<String,Stanza> stanzeAdiacenti;
 
 	/**
 	 * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -31,11 +27,9 @@ public class Stanza {
 	 */
 	public Stanza(String nome) {
 		this.nome = nome;
-		this.numeroStanzeAdiacenti = 0;
-		this.setNumeroAttrezzi(0);
-		this.direzioni = new String[NUMERO_MASSIMO_DIREZIONI];
-		this.stanzeAdiacenti = new Stanza[NUMERO_MASSIMO_DIREZIONI];
-		this.attrezzi = new Attrezzo[NUMERO_MASSIMO_ATTREZZI];
+		this.stanzeAdiacenti = new HashMap<>();
+		this.attrezzi = new ArrayList<>();
+		this.direzionestanzaAdiacente = new HashMap<>();
 	}
 
 	/**
