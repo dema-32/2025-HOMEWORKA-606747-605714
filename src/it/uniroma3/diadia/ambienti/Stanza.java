@@ -1,7 +1,8 @@
 package it.uniroma3.diadia.ambienti;
 import java.util.*;
+
+import it.uniroma3.diadia.AbstractPersonaggio;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.personaggi.AbstractPersonaggio;
 
 
 public class Stanza {
@@ -15,7 +16,7 @@ public class Stanza {
 	private Map<Direzione, Stanza> direzione2stanzaAdiacente;
 	private Map<String,Stanza> stanzeAdiacenti;
 
-	private AbstractPersonaggio personaggio;
+	private it.uniroma3.diadia.AbstractPersonaggio personaggio;
 	/**
 	 * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
 	 * @param nome il nome della stanza

@@ -109,7 +109,5 @@ public class Labirinto{
 			this.ultimaAggiunta = stanza;
 			this.nome2stanza.put(stanza.getNome(), stanza);
 		}
-		
-
 	}
 }

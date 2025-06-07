@@ -1,10 +1,11 @@
 package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 public class ComandoVai implements Comando {
-    private String direzione;
+    private Direzione direzione;
 
     @Override
     public void esegui(Partita partita) {
@@ -14,7 +15,7 @@ public class ComandoVai implements Comando {
             return;
         }
 
-        Stanza prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
+        Stanza prossimaStanza = partita.getLabirinto().getStanzaCorrente().getStanzaAdiacente(this.direzione);
         if (prossimaStanza == null) {
             System.out.println("Direzione inesistente");
             return;
@@ -30,6 +31,11 @@ public class ComandoVai implements Comando {
 
     
     public void setParametro(String parametro) {
-        this.direzione = parametro;
+        try {
+            this.direzione = Direzione.valueOf(parametro.toUpperCase());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            this.direzione = null;
+        }
     }
+
 }

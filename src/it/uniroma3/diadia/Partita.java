@@ -50,4 +50,9 @@ public class Partita {
 		return this.labirinto.getStanzaCorrente() == this.labirinto.getStanzaVincente();
 	}
 
+	public Object getStanzaCorrente() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

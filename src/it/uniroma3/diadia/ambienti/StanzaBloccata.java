@@ -4,13 +4,13 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaBloccata extends StanzaProtetta{
 	
-	private String dirBloc;
+	private Direzione dirBloc;
 	private String chiave;
 	private Partita partita;
 	
-	public StanzaBloccata(String nome, String dirBloc, String chiave) {
+	public StanzaBloccata(String nome, Direzione direzioneBloccata, String chiave) {
 		super(nome);
-		this.dirBloc = dirBloc;
+		this.dirBloc = direzioneBloccata;
 		this.chiave = chiave;
 		this.numeroStanzeAdiacenti = 0;
 		this.setNumeroAttrezzi(0);
