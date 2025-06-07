@@ -1,23 +1,31 @@
 package it.uniroma3.diadia;
+
 import java.util.Scanner;
 
-/** 
- * La classe si occupa di gestire l'interfaccia con l'utente.
- * 
- * @author Docente di POO
+/**
+ * Gestisce l'interfaccia con l'utente usando try-with-resources
  */
+public class IOConsole implements IO, AutoCloseable {
+    private Scanner scanner;
 
-public class IOConsole implements IO{
-	
-	public void mostraMessaggio(String msg) {
-		System.out.println(msg);
-	}
-	
-	public String leggiRiga() {
-		Scanner scannerDiLinee = new Scanner(System.in);
-		String riga = scannerDiLinee.nextLine();
-		// scannerDiLinee.close();
-		return riga;
-	}
+    public IOConsole() {
+        this.scanner = new Scanner(System.in);
+    }
 
+    @Override
+    public void mostraMessaggio(String msg) {
+        System.out.println(msg);
+    }
+
+    @Override
+    public String leggiRiga() {
+        return this.scanner.nextLine();
+    }
+
+    @Override
+    public void close() {
+        if (this.scanner != null) {
+            this.scanner.close();
+        }
+    }
 }

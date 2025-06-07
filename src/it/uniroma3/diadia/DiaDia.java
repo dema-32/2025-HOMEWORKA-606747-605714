@@ -1,66 +1,52 @@
+// DiaDia.java
 package it.uniroma3.diadia;
-import it.uniroma3.diadia.comandi.*;
+
+import it.uniroma3.diadia.comandi.Comando;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 
 /**
- * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
- * Per giocare crea un'istanza di questa classe e invoca il metodo gioca
- *
- * Questa e' la classe principale crea e istanzia tutte le altre
- *
- * @author  docente di POO 
- *         (da un'idea di Michael Kolling and David J. Barnes) 
- *          
- * @version base
+ * Classe principale del gioco
  */
-
 public class DiaDia {
+    static final private String MESSAGGIO_BENVENUTO =
+        "Ti trovi nell'Universita', ma oggi e' diversa dal solito...\n" +
+        "Meglio andare al piu' presto in biblioteca a studiare. Ma dov'e'?\n" +
+        "I locali sono popolati da strani personaggi, alcuni amici, altri... chissa!\n" +
+        "Ci sono attrezzi che potrebbero servirti nell'impresa:\n" +
+        "puoi raccoglierli, usarli, posarli quando ti sembrano inutili o regalarli se pensi che possano ingraziarti qualcuno.\n\n" +
+        "Per conoscere le istruzioni usa il comando 'aiuto'.";
 
-	static final private String MESSAGGIO_BENVENUTO = ""+
-			"Ti trovi nell'Universita', ma oggi e' diversa dal solito...\n" +
-			"Meglio andare al piu' presto in biblioteca a studiare. Ma dov'e'?\n"+
-			"I locali sono popolati da strani personaggi, " +
-			"alcuni amici, altri... chissa!\n"+
-			"Ci sono attrezzi che potrebbero servirti nell'impresa:\n"+
-			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
-			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
-			"Per conoscere le istruzioni usa il comando 'aiuto'.";
+    private Partita partita;
+    private IO io;
 
-	static final private String[] elencoComandi = {"vai", "prendi", "posa","borsa", "fine","aiuto"};
+    public DiaDia(IO io) {
+        this.partita = new Partita(io);
+        this.io = io;
+    }
 
-	private Partita partita;
-	private IO io;
-	private FabbricaDiComandi FabbricaDiComandiFisarmonica;
+    public void gioca() {
+        io.mostraMessaggio(MESSAGGIO_BENVENUTO);
+        String istruzione;
+        do {
+            istruzione = io.leggiRiga();
+        } while (!processaIstruzione(istruzione));
+    }
 
-	public DiaDia(IO io) {
-		this.partita = new Partita(io);
-		this.io = io;
-	}
+    private boolean processaIstruzione(String istruzione) {
+        FabbricaDiComandiFisarmonica factory = new FabbricaDiComandiFisarmonica();
+        Comando comando = factory.costruisciComando(istruzione);
+        comando.esegui(this.partita);
 
-	public void gioca() {
-		String istruzione;
-		io.mostraMessaggio(MESSAGGIO_BENVENUTO);	
+        if (this.partita.isVinta()) {
+            io.mostraMessaggio("Hai vinto!");
+        }
+        return this.partita.isFinita();
+    }
 
-		do		
-			istruzione = io.leggiRiga();
-		while ((!processaIstruzione(istruzione)));
-	}   
-
-	
-	private boolean processaIstruzione(String istruzione) {
-		Comando comandoDaEseguire;
-		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
-		comandoDaEseguire = factory.costruisciComando(istruzione);
-		comandoDaEseguire.esegui(this.partita);
-		
-		if (this.partita.isVinta())
-			System.out.println("Hai vinto!");
-		
-		return this.partita.isFinita();
-	}
-
-	public static void main(String[] argc) {
-		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
-		gioco.gioca();
-	}
+    public static void main(String[] args) {
+        try (IOConsole io = new IOConsole()) {
+            DiaDia gioco = new DiaDia(io);
+            gioco.gioca();
+        }
+    }
 }

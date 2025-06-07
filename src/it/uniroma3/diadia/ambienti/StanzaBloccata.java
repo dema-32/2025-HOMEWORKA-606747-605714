@@ -1,42 +1,37 @@
 package it.uniroma3.diadia.ambienti;
-import it.uniroma3.diadia.Partita;
+
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class StanzaBloccata extends StanzaProtetta{
-	
-	private Direzione dirBloc;
-	private String chiave;
-	private Partita partita;
-	
-	public StanzaBloccata(String nome, Direzione direzioneBloccata, String chiave) {
-		super(nome);
-		this.dirBloc = direzioneBloccata;
-		this.chiave = chiave;
-		this.numeroStanzeAdiacenti = 0;
-		this.setNumeroAttrezzi(0);
-		this.direzioni = new String[NUMERO_MASSIMO_DIREZIONI];
-		this.stanzeAdiacenti = new Stanza[NUMERO_MASSIMO_DIREZIONI];
-		this.attrezzi = new Attrezzo[NUMERO_MASSIMO_ATTREZZI];
-	}
-	
-	@Override
-	public Stanza getStanzaAdiacente(String direzione) {
-	    // Se la direzione è bloccata
-	    if (direzione.equals(this.dirBloc)) {
-	        // Controllo se ho la chiave
-	        for (Attrezzo a : this.attrezzi) {
-	            if (a != null && a.getNome().equals(this.chiave)) {
-	                // Ho la chiave → ritorno stanza adiacente normalmente
-	                return super.getStanzaAdiacente(direzione);
-	            }
-	        }
-	        // Non ho la chiave → rimango nella stessa stanza
-	        System.out.println("Direzione bloccata! Ti serve la chiave: " + this.chiave);
-	        return this;
-	    }
+public class StanzaBloccata extends Stanza {
 
-	    // Direzione diversa da quella bloccata → normale
-	    return super.getStanzaAdiacente(direzione);
+    private Direzione direzioneBloccata;
+    private String attrezzoSbloccante;
+
+    public StanzaBloccata(String nome, Direzione direzioneBloccata, String attrezzoSbloccante) {
+        super(nome);
+        this.direzioneBloccata = direzioneBloccata;
+        this.attrezzoSbloccante = attrezzoSbloccante;
     }
 
+    @Override
+    public Stanza getStanzaAdiacente(Direzione direzione) {
+        if (direzione == null)
+            return null;
+
+        if (direzione.equals(this.direzioneBloccata) && !this.hasAttrezzo(attrezzoSbloccante)) {
+            return this; // bloccata
+        }
+
+        return super.getStanzaAdiacente(direzione);
+    }
+
+    @Override
+    public String getDescrizione() {
+        String descrizione = super.getDescrizione();
+        if (!this.hasAttrezzo(attrezzoSbloccante)) {
+            descrizione += "\n[STANZA BLOCCATA]: la direzione '" + direzioneBloccata +
+                           "' è bloccata. Serve l'attrezzo: " + attrezzoSbloccante;
+        }
+        return descrizione;
+    }
 }

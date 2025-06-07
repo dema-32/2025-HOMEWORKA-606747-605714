@@ -2,15 +2,10 @@ package it.uniroma3.diadia.ambienti;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class StanzaProtetta extends Stanza{
+public class StanzaProtetta {
 
-	public StanzaProtetta(String nome) {
-		super(nome);
-		// TODO Auto-generated constructor stub
-	}
-
-	static final protected int NUMERO_MASSIMO_DIREZIONI = 4;
-	static final protected int NUMERO_MASSIMO_ATTREZZI = 10;
+	static final private int NUMERO_MASSIMO_DIREZIONI = 4;
+	static final private int NUMERO_MASSIMO_ATTREZZI = 10;
 
 	protected String nome;
 
@@ -21,6 +16,19 @@ public class StanzaProtetta extends Stanza{
 	protected int numeroStanzeAdiacenti;
 
 	protected String[] direzioni;
+
+	/**
+	 * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
+	 * @param nome il nome della stanza
+	 */
+	public StanzaProtetta(String nome) {
+		this.nome = nome;
+		this.numeroStanzeAdiacenti = 0;
+		this.setNumeroAttrezzi(0);
+		this.direzioni = new String[NUMERO_MASSIMO_DIREZIONI];
+		this.stanzeAdiacenti = new Stanza[NUMERO_MASSIMO_DIREZIONI];
+		this.attrezzi = new Attrezzo[NUMERO_MASSIMO_ATTREZZI];
+	}
 
 	/**
 	 * Imposta una stanza adiacente.
@@ -77,6 +85,11 @@ public class StanzaProtetta extends Stanza{
 	 */
 	public Attrezzo[] getAttrezzi() {
 		return this.attrezzi;
+	}
+	
+	public boolean isFull() {
+		if(this.numeroAttrezzi == NUMERO_MASSIMO_ATTREZZI) return true;
+		return false;
 	}
 
 	/**
@@ -150,24 +163,25 @@ public class StanzaProtetta extends Stanza{
 
 	/**
 	 * Rimuove un attrezzo dalla stanza (ricerca in base al nome).
-	 * @param nomeAttrezzo
+	 * @param attezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	public boolean removeAttrezzo(Attrezzo attrezzo) { 
-		 if (attrezzo == null) {
-		        return false;
-		    }
-
-		    for (int i = 0; i < this.numeroAttrezzi; i++) {
-		        if (this.attrezzi[i] != null && this.attrezzi[i].toString().equals(attrezzo.toString())) {
-		            this.attrezzi[i] = this.attrezzi[this.numeroAttrezzi - 1]; // Sostituisco con l'ultimo attrezzo
-		            this.attrezzi[this.numeroAttrezzi - 1] = null; // Cancello l'ultimo elemento
-		            this.numeroAttrezzi--; // Riduco il numero di attrezzi
-		            return true;
-		        }
-		    }
-
-		    return false;
+	
+	public boolean removeAttrezzo(Attrezzo attrezzo) {
+		if(attrezzo == null) return false;
+		for(int i=0; i<this.numeroAttrezzi; i++) {
+			if(this.attrezzi[i].getNome().equals(attrezzo.getNome())) {  //trovo l'attrezzo nella stanza
+				for(int j = i; j<numeroAttrezzi; j++) {
+					attrezzi[j] = attrezzi[j+1];			//scorro l'array a sinistra di 1 posto
+				}
+				 // Imposta l'ultimo elemento a null
+	            this.attrezzi[this.numeroAttrezzi - 1] = null;
+				this.numeroAttrezzi--;
+				return true;
+			}
+		}
+		return false;			//non trovo l'attrezzo nella stanza
+			
 	}
 
 

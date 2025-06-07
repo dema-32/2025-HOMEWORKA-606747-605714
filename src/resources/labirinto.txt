@@ -1,0 +1,11 @@
+Stanze: Atrio,Corridoio,AulaMagica,Biblioteca,Magazzino
+Magica: AulaMagica
+Buia: Corridoio lanterna
+Bloccata: Magazzino EST chiave
+Inizio: Atrio
+Vincente: Biblioteca
+Mago: Biblioteca Gandalf Benvenuto spadone
+Strega: Corridoio Morgana Maledizione
+Cane: Atrio Fido Bau
+Attrezzi: lanterna 1 Corridoio,chiave 1 Magazzino,pozzo 2 Biblioteca
+Uscite: Atrio NORD Corridoio,Corridoio SUD Atrio,Corridoio EST AulaMagica,AulaMagica OVEST Corridoio,AulaMagica NORD Biblioteca,Biblioteca SUD AulaMagica,Magazzino OVEST Atrio
